@@ -1,0 +1,103 @@
+@import 'vue-slick-carousel/dist/vue-slick-carousel.css';
+// optional style for arrows & dots
+@import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css';
+a {
+  text-decoration: none;
+}
+.slick-slider {
+  max-width: 100%;
+  margin-top: 36px;
+}
+.slick-slide {
+  padding-left: 8px;
+  padding-right: 8px;
+}
+.slick-dots {
+  margin-bottom: 16px;
+}
+.v-icon {
+  color: #fff !important;
+}
+.v-list-item__content {
+  padding: 0 !important;
+  a {
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+}
+.v-divider {
+  border-top-color: #0f2133 !important;
+}
+.v-tab {
+  a {
+    padding-top: 16px;
+    padding-bottom: 16px;
+    text-decoration: none;
+    color: inherit;
+  }
+}
+.v-item-group {
+  height: unset !important;
+}
+.v-toolbar__title {
+  padding-left: 0 !important;
+}
+.v-input__control {
+  min-height: 36px !important;
+}
+.v-input__append-inner {
+  .v-icon {
+    color: #020d18 !important;
+  }
+}
+.container {
+  padding-left: 24px !important;
+  padding-right: 24px !important;
+}
+
+/***** Layout *****/
+.search {
+  flex: 20%;
+  max-width: 20%;
+  min-width: 150px;
+  margin-left: auto !important;
+  input {
+    width: 100%;
+    background-color: #fff;
+    outline: none;
+    padding-top: 5px;
+    padding-bottom: 5px;
+  }
+  .v-card {
+    position: absolute;
+    right: 0;
+    margin-top: 1px;
+    width: 100%;
+    .v-list{
+      padding-top:0!important;
+      padding-bottom:0!important;
+    }
+  }
+}
+/***** Responsive Style *****/
+@media only screen and (max-width: 800px) {
+  body {
+    font-size: 15px;
+  }
+}
+@media only screen and (max-width: 600px) {
+  body {
+    font-size: 14px;
+  }
+}
+
+@media only screen and (max-width: 400px) {
+  body {
+    font-size: 13px;
+  }
+}
+@media only screen and (max-width: 300px) {
+  body {
+    font-size: 12px;
+  }
+}
