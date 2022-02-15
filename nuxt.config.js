@@ -76,7 +76,4 @@ export default {
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
   },
-  env:{
-    API_TOKEN: '30b507191fmshf1309fbc3a2421ap1d2007jsn670e526d79e4'
-  }
 }

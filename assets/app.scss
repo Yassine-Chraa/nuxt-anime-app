@@ -57,9 +57,8 @@ a {
 
 /***** Layout *****/
 .search {
-  flex: 20%;
-  max-width: 20%;
-  min-width: 150px;
+  flex: 30%;
+  min-width: 250px;
   margin-left: auto !important;
   input {
     width: 100%;
@@ -73,9 +72,12 @@ a {
     right: 0;
     margin-top: 1px;
     width: 100%;
-    .v-list{
-      padding-top:0!important;
-      padding-bottom:0!important;
+    .v-list {
+      padding-top: 0 !important;
+      padding-bottom: 0 !important;
+      .v-list-item:hover {
+        background-color: rgb(235, 221, 221);
+      }
     }
   }
 }

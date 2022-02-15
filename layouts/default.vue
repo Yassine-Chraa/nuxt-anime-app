@@ -10,11 +10,12 @@
       <div class="search" style="position: relative">
         <input
           v-model="val"
+          v-if="$vuetify.breakpoint.name !== 'xs'"
           type="search"
           name=""
           placeholder="Search..."
           class="px-3 rounded-lg"
-          @keyup="getAnimes"
+          @keyup.prevent="getAnimes"
           @focus="display = true"
           @blur="blurAction($event)"
         />
@@ -22,16 +23,34 @@
           <v-list v-if="showList">
             <v-list-item-group>
               <v-list-item v-for="(item, i) in items.slice(0, 6)" :key="i">
-                <v-list-item-content id="animeLink" @click="close()">
-                  <n-link
-                    :to="
-                      '/animes/' +
-                      item.title.replaceAll(' ', '-').replaceAll(':', '')
-                    "
-                    style="color: inherit"
-                    ><v-list-item-title v-text="item.title"></v-list-item-title
-                  ></n-link>
-                </v-list-item-content>
+                <n-link
+                  :to="
+                    '/animes/' +
+                    item.title.replaceAll(' ', '-').replaceAll(':', '')
+                  "
+                  style="color: inherit"
+                  class="d-flex ma-0"
+                >
+                  <v-list-item-avatar size="30">
+                    <v-img
+                    :src="item.image_url"
+                    aspect-ratio="1"
+                    class="grey lighten-2"
+                  >
+                   <template #placeholder>
+                      <v-row
+                        class="fill-height ma-0"
+                        align="center"
+                        justify="center"
+                      >
+                      </v-row>
+                    </template>
+                    </v-img>
+                  </v-list-item-avatar>
+                  <v-list-item-content id="animeLink" @click="close()">
+                    <v-list-item-title v-text="item.title.substr(0,24)"></v-list-item-title>
+                  </v-list-item-content>
+                </n-link>
               </v-list-item>
             </v-list-item-group>
           </v-list>
