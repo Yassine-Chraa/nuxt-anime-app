@@ -1,10 +1,10 @@
 <template>
   <v-container v-if="animeDetails">
-    <v-tabs v-if="animeDetails.type !== 'movie'" align-with-title>
+    <v-tabs v-if="animeDetails.type !== 'Movie'" align-with-title>
       <v-tab><a @click="display = false">Details</a></v-tab>
       <v-tab><a @click="display = true">Episodes</a></v-tab>
     </v-tabs>
-    <v-row v-show="!display" v-if="animeDetails" class="pt-8">
+    <v-row v-show="!display" v-if="animeDetails" class="pt-4">
       <v-col class="poster" cols="6" sm="5" md="4" lg="3">
         <v-img
           :src="animeDetails.image_url"
@@ -22,7 +22,7 @@
           </template>
         </v-img>
       </v-col>
-      <v-col class="content"  cols="6" sm="7" md="8" lg="9">
+      <v-col class="content" cols="6" sm="7" md="8" lg="9">
         <div class="heading d-flex" style="align-items: center">
           <h1>{{ animeDetails.title }}</h1>
           <div
@@ -48,9 +48,9 @@
         <div class="details">
           <p>{{ animeDetails.synopsis }}</p>
           <v-simple-table
+            v-show="!changeLayout"
             dark
             style="color: inherit; background-color: transparent"
-
           >
             <tbody>
               <tr>
@@ -79,23 +79,73 @@
               <tr>
                 <td>MyAnimeList</td>
                 <td>
-                  <a style="font-weight: 500; text-decoration: none" :href="animeDetails.url">{{
-                    animeDetails.url
-                  }}</a>
+                  <a
+                    style="font-weight: 500; text-decoration: none"
+                    :href="animeDetails.url"
+                    >{{ animeDetails.url }}</a
+                  >
                 </td>
               </tr>
               <tr v-if="$vuetify.breakpoint.name === 'xs'">
                 <td>Rating</td>
-                <td>{{ animeDetails.score }}/10
-                </td>
+                <td>{{ animeDetails.score }}/10</td>
               </tr>
             </tbody>
           </v-simple-table>
         </div>
       </v-col>
+      <v-col cols="12" v-show="changeLayout">
+        <v-simple-table
+          dark
+          style="color: inherit; background-color: transparent"
+        >
+          <tbody>
+            <tr>
+              <td>Type</td>
+              <td>{{ animeDetails.type }}</td>
+            </tr>
+
+            <tr v-if="animeDetails.rated">
+              <td>Rated</td>
+              <td>{{ animeDetails.rated }}</td>
+            </tr>
+            <tr v-if="animeDetails.start_date">
+              <td>First Show</td>
+              <td>
+                {{ animeDetails.start_date.substr(0, 10).replaceAll('-', '/') }}
+              </td>
+            </tr>
+            <tr>
+              <td>Members</td>
+              <td>
+                {{ animeDetails.members }}
+              </td>
+            </tr>
+            <tr>
+              <td>MyAnimeList</td>
+              <td>
+                <a
+                  style="font-weight: 500; text-decoration: none"
+                  :href="animeDetails.url"
+                  >{{ animeDetails.url }}</a
+                >
+              </td>
+            </tr>
+            <tr v-if="$vuetify.breakpoint.name === 'xs'">
+              <td>Rating</td>
+              <td>{{ animeDetails.score }}/10</td>
+            </tr>
+          </tbody>
+        </v-simple-table>
+      </v-col>
     </v-row>
     <v-row v-show="display" v-if="animeEpisodes" style="color: #abb7c4">
-      <v-col v-for="(episode, ind) in animeEpisodes" :key="ind" md="6" cols="12">
+      <v-col
+        v-for="(episode, ind) in animeEpisodes"
+        :key="ind"
+        md="6"
+        cols="12"
+      >
         <div class="episode d-flex justify-space-between">
           <n-link :to="`${anime}/${episode.episode_id}`"
             >Episode: {{ episode.episode_id }}</n-link
@@ -124,6 +174,7 @@ export default {
   data() {
     return {
       display: false,
+      changeLayout: false,
     }
   },
   computed: {
@@ -146,6 +197,19 @@ export default {
   created() {
     this.$store.dispatch('clearAnimeDetails')
     this.$store.dispatch('getAnime', this.anime)
+  },
+  mounted() {
+    this.updatePage();
+    window.addEventListener('resize', this.updatePage)
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.updatePage)
+  },
+  methods: {
+    updatePage() {
+      if (innerWidth > 450) this.changeLayout = true
+      if(innerWidth > 650) this.changeLayout = false
+    },
   },
 }
 </script>
@@ -175,14 +239,21 @@ h1 {
     color: #abb7c4;
   }
 }
-@media only screen and (max-width: 450px){
-  .poster{
-    flex:0 0 100%;
+@media only screen and (max-width: 460px) {
+  .poster {
+    flex: 0 0 100%;
+    max-width: 75%;
+    margin: auto;
+    height: 370px;
+  }
+  .content {
+    flex: 0 0 100%;
     max-width: 100%;
   }
-  .content{
-    flex:0 0 100%;
-    max-width: 100%;
+}
+@media only screen and (max-width: 400px) {
+  .poster {
+    max-width: 80%;
   }
 }
 </style>

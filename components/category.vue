@@ -1,15 +1,17 @@
 <template>
-  <v-container>
+  <v-container class="categorie">
     <v-row>
-      <v-col class="mt-2" cols="12">
-        <h2 style="font-size: 1.5em; color: #fff;text-transform:uppercase">{{title}}</h2>
+      <v-col class="mt-2 categorie-name" cols="12">
+        <h2>
+          {{ title }}
+        </h2>
       </v-col>
-      <v-col v-for="(serie, j) in data" :key="j" cols="6" sm="4" md="3">
+      <v-col v-for="(serie, j) in data" :key="j" cols="6" sm="4" md="3" class="categorie-item">
         <v-card color="transparent" style="box-shadow: unset" class="mx-auto">
           <template slot="progress">
             <v-progress-linear
               color="deep-purple"
-              height="10"
+              :height="10"
               indeterminate
             ></v-progress-linear>
           </template>
@@ -19,7 +21,7 @@
             "
           >
             <v-img
-              :height="height"
+              :height="275"
               :src="serie.image_url"
               aspect-ratio="1"
               class="grey lighten-2"
@@ -35,7 +37,7 @@
             </v-img>
           </n-link>
           <h3 style="color: #fff">{{ serie.title }}</h3>
-          <v-card-text>
+          <v-card-text v-if="serie.score > 0">
             <v-row>
               <v-icon
                 style="
@@ -59,34 +61,11 @@
 
 <script>
 export default {
-  props:{
-    data:Array,
-    title:String
+  props: {
+    data: { type: Array, default: () => [] },
+    title: { type: String, default: () => '' },
   },
-  methods:{
-    height() {
-      let height;
-      switch (this.$vuetify.breakpoint.name) {
-        case 'sm':
-          height = 300
-          break
-        case 'md':
-          height = 350
-          break
-        case 'lg':
-          height = 375
-          break
-        case 'xl':
-          height = 400
-          break
-        default:
-          height = 175
-      }
-      return height
-    },
-  }
 }
 </script>
 
-<style>
-</style>
+<style></style>

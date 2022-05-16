@@ -10,7 +10,6 @@
       <div class="search" style="position: relative">
         <input
           v-model="val"
-          v-if="$vuetify.breakpoint.name !== 'xs'"
           type="search"
           name=""
           placeholder="Search..."
@@ -19,10 +18,17 @@
           @focus="display = true"
           @blur="blurAction($event)"
         />
+        <v-icon
+          class="search-icon"
+          style="display: none"
+          @click="showSearch = !showSearch"
+        >
+          mdi-magnify
+        </v-icon>
         <v-card v-if="display" class="mx-auto rounded-lg">
           <v-list v-if="showList">
-            <v-list-item-group>
-              <v-list-item v-for="(item, i) in items.slice(0, 6)" :key="i">
+            <v-list-item-group v-for="(item, i) in items.slice(0, 6)" :key="i">
+              <v-list-item id="animeLink">
                 <n-link
                   :to="
                     '/animes/' +
@@ -33,25 +39,28 @@
                 >
                   <v-list-item-avatar size="30">
                     <v-img
-                    :src="item.image_url"
-                    aspect-ratio="1"
-                    class="grey lighten-2"
-                  >
-                   <template #placeholder>
-                      <v-row
-                        class="fill-height ma-0"
-                        align="center"
-                        justify="center"
-                      >
-                      </v-row>
-                    </template>
+                      :src="item.image_url"
+                      aspect-ratio="1"
+                      class="grey lighten-2"
+                    >
+                      <template #placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                        </v-row>
+                      </template>
                     </v-img>
                   </v-list-item-avatar>
                   <v-list-item-content id="animeLink" @click="close()">
-                    <v-list-item-title v-text="item.title.substr(0,24)"></v-list-item-title>
+                    <v-list-item-title
+                      v-text="item.title.substr(0, 24)"
+                    ></v-list-item-title>
                   </v-list-item-content>
                 </n-link>
               </v-list-item>
+              <div class="divider"></div>
             </v-list-item-group>
           </v-list>
           <v-card-text v-else>Search for your favorite anime</v-card-text>
@@ -70,7 +79,7 @@
       </v-list-item>
       <v-divider></v-divider>
       <v-list dense>
-        <v-list-item link>
+        <v-list-item link @click="showSearch = false">
           <v-list-item-content>
             <n-link
               to="/"
@@ -79,9 +88,10 @@
             >
           </v-list-item-content>
         </v-list-item>
-        <v-list-item v-for="(cat, indice) in categories" :key="indice" link>
+        <v-list-item v-for="(cat, indice) in categories" :key="indice" link @click="showSearch = false">
           <v-list-item-content>
             <n-link
+
               :to="'/categories/' + cat.path"
               style="font-size: 1.2em; text-decoration: none; color: #fff"
               >{{ cat.name }}</n-link
@@ -90,7 +100,10 @@
         </v-list-item>
       </v-list>
     </v-navigation-drawer>
-    <v-main> <nuxt /></v-main>
+    <v-main>
+      <nuxt v-show="!showSearch" />
+      <search :showSearch="showSearch" />
+    </v-main>
     <v-divider class="mt-16"></v-divider>
     <v-footer dark color="#020d18"
       ><v-container style="padding: 0 !important"
@@ -112,7 +125,11 @@
   </v-app>
 </template>
 <script>
+import search from '@/components/search.vue'
 export default {
+  components: {
+    search,
+  },
   data: () => ({
     drawer: null,
     categories: [
@@ -134,7 +151,14 @@ export default {
     val: '',
     display: false,
     showList: false,
+    showSearch: false,
   }),
+  mounted() {
+    window.addEventListener('resize', this.updateShowSearch)
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.updateShowSearch)
+  },
   methods: {
     getAnimes() {
       if (this.val.length > 1) {
@@ -173,6 +197,11 @@ export default {
         }
       } else {
         this.close()
+      }
+    },
+    updateShowSearch() {
+      if (innerWidth > 500) {
+        this.showSearch = false
       }
     },
   },

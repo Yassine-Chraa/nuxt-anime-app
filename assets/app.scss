@@ -4,6 +4,9 @@
 a {
   text-decoration: none;
 }
+h3 {
+  font-size: 1em;
+}
 .slick-slider {
   max-width: 100%;
   margin-top: 36px;
@@ -54,12 +57,30 @@ a {
   padding-left: 24px !important;
   padding-right: 24px !important;
 }
-
+.carousel {
+  padding-left: 28px !important;
+  padding-right: 28px !important;
+  .row {
+    margin-left: 0 !important;
+    margin-left: 0 !important;
+  }
+}
+.categorie-name {
+  padding-bottom: 0 !important;
+  padding-top: 32px !important;
+  h2 {
+    font-size: 1.5em;
+    color: #fff;
+    text-transform: uppercase;
+  }
+}
 /***** Layout *****/
-.search {
-  flex: 30%;
-  min-width: 250px;
+.search,
+.search-page {
+  //flex: 25%;
+  min-width: 300px;
   margin-left: auto !important;
+  //max-width: 25%;
   input {
     width: 100%;
     background-color: #fff;
@@ -78,24 +99,186 @@ a {
       .v-list-item:hover {
         background-color: rgb(235, 221, 221);
       }
+      .divider{
+        width: 100%;
+        height: 1px;
+        background-color: rgb(199, 188, 188);
+      }
     }
   }
 }
 /***** Responsive Style *****/
+
+@media only screen and (min-width: 960px) {
+  .carousel,
+  .categorie {
+    max-width: 85% !important;
+  }
+  .categorie {
+    .v-image {
+      height: 300px !important;
+    }
+  }
+}
+@media only screen and (max-width: 900px) {
+  .carousel {
+    height: 352px;
+    .v-image {
+      height: 320px !important;
+    }
+  }
+}
 @media only screen and (max-width: 800px) {
   body {
     font-size: 15px;
+  }
+  .search {
+    min-width: 275px;
+  }
+  .carousel {
+    padding: 0 !important;
+    height: 332px;
+    padding-top: 16px !important;
+    padding-bottom: 16px !important;
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    > .row {
+      margin: 0 !important;
+      .slick-slider {
+        padding: 0 !important;
+        .slick-list {
+          margin-bottom: -5px;
+          .slick-slide {
+            padding-left: 8px !important;
+            padding-right: 8px !important;
+            a {
+              display: block;
+              .v-image {
+                height: 300px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .categorie {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+    > .row {
+      margin: 0 !important;
+      .categorie-item {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+        .v-image {
+          height: 275px !important;
+        }
+      }
+    }
   }
 }
 @media only screen and (max-width: 600px) {
   body {
     font-size: 14px;
   }
+  .search {
+    min-width: 250px;
+  }
+  .carousel {
+    padding: 0 !important;
+    height: 291px;
+    padding-top: 8px !important;
+    padding-bottom: 8px !important;
+    > .row {
+      .slick-slider {
+        .slick-list {
+          .slick-slide {
+            a {
+              .v-image {
+                height: 275px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
 }
-
+@media only screen and (max-width: 500px) {
+  .search {
+    min-width: unset !important;
+    input {
+      display: none;
+    }
+    .search-icon {
+      display: block !important;
+    }
+  }
+  .search-page {
+    input {
+      padding-top: 6px !important;
+      padding-bottom: 6px !important;
+    }
+  }
+  .carousel {
+    > .row {
+      .slick-slider {
+        .slick-list {
+          .slick-slide {
+            padding-left: 6px !important;
+            padding-right: 6px !important;
+            a {
+              .v-image {
+                height: 275px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .categorie {
+    > .row {
+      .categorie-item {
+        padding-left: 8px !important;
+        padding-right: 8px !important;
+        .v-image {
+          height: 220px !important;
+        }
+      }
+    }
+  }
+}
 @media only screen and (max-width: 400px) {
   body {
     font-size: 13px;
+  }
+  .carousel {
+    height: 236px;
+    > .row {
+      .slick-slider {
+        .slick-list {
+          .slick-slide {
+            a {
+              .v-image {
+                height: 220px !important;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+  .categorie {
+    padding-left: 4px !important;
+    padding-right: 4px !important;
+    > .row {
+      .categorie-item {
+        .v-image {
+          height: 180px !important;
+        }
+      }
+    }
   }
 }
 @media only screen and (max-width: 300px) {

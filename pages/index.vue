@@ -1,10 +1,13 @@
 <template>
   <div class="grey lighten-2">
     <div id="top" style="background-color: #000">
-      <v-container style="padding: 0; padding-top: 12px">
+      <v-container
+        class="carousel"
+        style="padding-bottom: 0; padding-top: 12px"
+      >
         <v-row v-if="airingAnimes">
           <VueSlickCarousel
-            v-if="airingAnimes.length>0"
+            v-if="airingAnimes.length > 0"
             style="margin-top: 0; padding-top: 18px"
             class="pb-6"
             v-bind="settings"
@@ -20,7 +23,7 @@
                   :src="serie.image_url"
                   aspect-ratio="1"
                   class="grey lighten-2"
-                  height="300"
+                  :height="300"
                 >
                   <template #placeholder>
                     <v-row
@@ -50,8 +53,8 @@
 import { mapState } from 'vuex'
 import category from '@/components/category.vue'
 export default {
-  components:{
-    category
+  components: {
+    category,
   },
   data() {
     return {
@@ -69,25 +72,26 @@ export default {
         pauseOnDotsHover: true,
         responsive: [
           {
-            breakpoint: 1024,
+            breakpoint: 1500,
             settings: {
-              slidesToShow: 3,
-              slidesToScroll: 3,
+              slidesToShow: 4,
+              slidesToScroll: 4,
             },
           },
           {
-            breakpoint: 600,
+            breakpoint: 900,
+            settings: {
+              slidesToShow: 3,
+              slidesToScroll: 3,
+              initialSlide: 3,
+            },
+          },
+          {
+            breakpoint: 550,
             settings: {
               slidesToShow: 2,
               slidesToScroll: 2,
               initialSlide: 2,
-            },
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
             },
           },
         ],
