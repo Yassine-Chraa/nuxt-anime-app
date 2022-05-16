@@ -37,7 +37,7 @@
             </v-img>
           </n-link>
           <h3 style="color: #fff">{{ serie.title }}</h3>
-          <v-card-text v-if="serie.score > 0">
+          <v-card-text v-if="serie.score >0">
             <v-row>
               <v-icon
                 style="
