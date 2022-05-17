@@ -256,4 +256,9 @@ h1 {
     max-width: 80%;
   }
 }
+@media only screen and (max-width: 300px) {
+  .poster {
+    max-width: 100%;
+  }
+}
 </style>

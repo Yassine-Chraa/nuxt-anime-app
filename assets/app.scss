@@ -1,6 +1,7 @@
 @import 'vue-slick-carousel/dist/vue-slick-carousel.css';
 // optional style for arrows & dots
 @import 'vue-slick-carousel/dist/vue-slick-carousel-theme.css';
+@import './loader.scss';
 a {
   text-decoration: none;
 }
@@ -75,6 +76,13 @@ h3 {
   }
 }
 /***** Layout *****/
+.loading{
+  position: fixed;
+  z-index: 99;
+  width: 100%;
+  height: 100%;
+  background-color: rgb(13, 5, 5);
+}
 .search,
 .search-page {
   //flex: 25%;

@@ -1,8 +1,16 @@
 <template>
   <v-app id="app" style="background-color: #020d18; color: #fff">
+    <div v-show="isLoading" class="loading">
+      <div class="lds-ellipsis">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
+    </div>
     <v-app-bar app style="color: #fff" color="#020d18">
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
-      <v-toolbar-title
+      <v-toolbar-title @click="showSearch = false"
         ><n-link style="color: inherit" to="/"
           >AnimeWorld</n-link
         ></v-toolbar-title
@@ -19,6 +27,7 @@
           @blur="blurAction($event)"
         />
         <v-icon
+          id="searchIcon"
           class="search-icon"
           style="display: none"
           @click="showSearch = !showSearch"
@@ -70,7 +79,7 @@
     <v-navigation-drawer v-model="drawer" dark fixed temporary color="#020d18">
       <v-list-item>
         <v-list-item-avatar>
-          <v-img src="https://randomuser.me/api/portraits/men/78.jpg"></v-img>
+          <v-img :src="require('@/assets/profile.png')"></v-img>
         </v-list-item-avatar>
 
         <v-list-item-content>
@@ -88,10 +97,14 @@
             >
           </v-list-item-content>
         </v-list-item>
-        <v-list-item v-for="(cat, indice) in categories" :key="indice" link @click="showSearch = false">
+        <v-list-item
+          v-for="(cat, indice) in categories"
+          :key="indice"
+          link
+          @click="showSearch = false"
+        >
           <v-list-item-content>
             <n-link
-
               :to="'/categories/' + cat.path"
               style="font-size: 1.2em; text-decoration: none; color: #fff"
               >{{ cat.name }}</n-link
@@ -153,16 +166,27 @@ export default {
     showList: false,
     showSearch: false,
   }),
+  watch:{
+    $route(){
+      this.isLoading = true;
+      setTimeout(this.closeLoading,1000)
+    }
+  },
   mounted() {
-    window.addEventListener('resize', this.updateShowSearch)
+    addEventListener('load', this.closeLoading)
+    setTimeout(this.closeLoading,3000)
+    addEventListener('resize', this.updateShowSearch)
+  },
+  created() {
+    this.isLoading = true
   },
   destroyed() {
-    window.removeEventListener('resize', this.updateShowSearch)
+    removeEventListener('resize', this.updateShowSearch)
+    removeEventListener('load', this.closeLoading)
   },
   methods: {
     getAnimes() {
       if (this.val.length > 1) {
-        this.isLoading = true
         this.$axios
           .$request({
             method: 'GET',
@@ -175,7 +199,6 @@ export default {
           .then((res) => {
             this.items = res.results
             this.showList = true
-            this.isLoading = false
           })
           .catch(() => {
             this.items = []
@@ -203,6 +226,9 @@ export default {
       if (innerWidth > 500) {
         this.showSearch = false
       }
+    },
+    closeLoading() {
+      this.isLoading = false
     },
   },
 }

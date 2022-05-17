@@ -1,53 +1,11 @@
 <template>
-  <category  :data="animesData" :title="cat.split('-').join(' ')" />
+  <category :data="animesData" :title="cat.split('-').join(' ')" />
 </template>
 <script>
 export default {
   async asyncData({ params }) {
     const cat = await params.cat
     return { cat }
-  },
-  data() {
-    return {
-      settings: {
-        dots: true,
-        arrows: false,
-        focusOnSelect: true,
-        infinite: true,
-        speed: 1500,
-        autoplay: true,
-        autoplaySpeed: 5000,
-        slidesToShow: 5,
-        slidesToScroll: 5,
-        touchThreshold: 7,
-        pauseOnDotsHover: true,
-        responsive: [
-          {
-            breakpoint: 1024,
-            settings: {
-              slidesToShow: 3,
-              slidesToScroll: 3,
-            },
-          },
-          {
-            breakpoint: 600,
-            settings: {
-              slidesToShow: 2,
-              slidesToScroll: 2,
-              initialSlide: 2,
-            },
-          },
-          {
-            breakpoint: 480,
-            settings: {
-              slidesToShow: 1,
-              slidesToScroll: 1,
-              dots: false,
-            },
-          },
-        ],
-      },
-    }
   },
   computed: {
     animesData() {
@@ -59,6 +17,8 @@ export default {
       return data
     },
   },
+  mounted() {
+  },
   created() {
     if (this.cat === 'top-animes' && this.$store.state.topAnimes.length === 0)
       this.$store.dispatch('getTopAnimes')
@@ -69,6 +29,8 @@ export default {
       this.$store.dispatch('getUpcomingAnimes')
     if (this.cat === 'movies' && this.$store.state.movies.length === 0)
       this.$store.dispatch('getMovies')
+  },
+  methods: {
   },
 }
 </script>

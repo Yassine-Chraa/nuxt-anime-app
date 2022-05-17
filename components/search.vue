@@ -17,13 +17,14 @@
     <v-card v-if="display" class="mx-auto">
       <v-list v-if="showList">
         <v-list-item-group v-for="(item, i) in items.slice(0, 6)" :key="i">
-          <v-list-item id="animeLink">
+          <v-list-item id="animeLink" @click="closeSearch">
             <n-link
               :to="
                 '/animes/' + item.title.replaceAll(' ', '-').replaceAll(':', '')
               "
               style="color: inherit"
               class="d-flex ma-0"
+              :showSearch="showSearch"
             >
               <v-list-item-avatar size="30">
                 <v-img
@@ -73,7 +74,6 @@ export default {
   methods: {
     getAnimes() {
       if (this.val.length > 1) {
-        this.isLoading = true
         this.$axios
           .$request({
             method: 'GET',
@@ -86,7 +86,6 @@ export default {
           .then((res) => {
             this.items = res.results
             this.showList = true
-            this.isLoading = false
           })
           .catch(() => {
             this.items = []
@@ -110,6 +109,9 @@ export default {
         this.close()
       }
     },
+    closeSearch(){
+      document.getElementById('searchIcon').click();
+    }
   },
 }
 </script>
